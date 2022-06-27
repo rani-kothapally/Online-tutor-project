@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import Login from "./login/login";
 import Signup from "./signup/signup";
-// import Dashboard from 'dash';
 import "./App.css";
 import Dashboard from "./dashboard/dashboard";
 import Subjectdetails from "./subjectDetails/subjectdetails";
