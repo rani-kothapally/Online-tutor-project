@@ -10,8 +10,8 @@ export default function Login() {
   // User Login info
   const database = [
     {
-      username: "user1",
-      password: "pass1"
+      username: "rani",
+      password: "password"
     },
     {
       username: "user2",

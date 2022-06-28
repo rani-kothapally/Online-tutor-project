@@ -6,7 +6,7 @@ import Header  from '../header';
 export default function Dashboard() {
   const [searchResult, setSearchResult] = useState(subjects);
   const onSearch = (e) => {
-    let result = subjects.filter((eachName) => eachName.name.includes(e.target.value));
+    let result = subjects.filter((eachName) => eachName.name.toLowerCase().includes(e.target.value.toLowerCase()));
     setSearchResult(result);
     if (e.target.value == '') {
       setSearchResult(subjects);
