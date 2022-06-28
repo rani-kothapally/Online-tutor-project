@@ -64,7 +64,8 @@ input[type="submit"]:hover {
 
 .subjectBlock{
   width: 160px;
-  height: 50px;
+  height: auto;
+  min-height: 50px;
   border: 1px solid #d5cdcd;
   box-shadow: -1px 0px 4px 0px #e5dcdc;
   border-radius: 5%;

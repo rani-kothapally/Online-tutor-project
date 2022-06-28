@@ -16,7 +16,7 @@ export default function Dashboard() {
   const id = queryParams.get('id');
   const [openChat, setChat] = useState(false);
   const subject = subjects.filter((eachSubject) => eachSubject.id == id)[0].name;
-  const teachersList = teachers.filter((eachTeacher) => eachTeacher.subjectId == id);
+  const teachersList = teachers.filter((eachTeacher) => eachTeacher.subjectId.includes(id));
   const [searchResult, setSearchResult] = useState(teachersList);
 
   const [chatCtl] = React.useState(new ChatController({
@@ -43,7 +43,7 @@ export default function Dashboard() {
   //   // Now send the message throught the backend API
   // };
   const onSearch = (e) => {
-    let result = teachersList.filter((eachName) => eachName.name.includes(e.target.value));
+    let result = teachersList.filter((eachName) => eachName.name.toLowerCase().includes(e.target.value.toLowerCase()));
     setSearchResult(result);
     if (e.target.value == '') {
       setSearchResult(teachersList);
@@ -73,7 +73,7 @@ export default function Dashboard() {
 
 async function echo(chatCtl) {
   
-  const text = await chatCtl.setActionRequest({
+  await chatCtl.setActionRequest({
     type: 'text',
     placeholder: 'Enter text here',
   });
@@ -92,27 +92,31 @@ async function echo(chatCtl) {
 
   await chatCtl.addMessage({
     type: 'text',
-    content: `What is your gender?`,
+    content: `How are you?`,
     self: false,
     avatar: '-',
   });
-  const sel = await chatCtl.setActionRequest({
-    type: 'select',
-    options: [
-      {
-        value: 'man',
-        text: 'Man',
-      },
-      {
-        value: 'woman',
-        text: 'Woman',
-      },
-      {
-        value: 'other',
-        text: 'Other',
-      },
-    ],
+  await chatCtl.setActionRequest({
+    type: 'text',
+    placeholder: 'Enter text here',
   });
+  // const sel = await chatCtl.setActionRequest({
+  //   type: 'select',
+  //   options: [
+  //     {
+  //       value: 'man',
+  //       text: 'Man',
+  //     },
+  //     {
+  //       value: 'woman',
+  //       text: 'Woman',
+  //     },
+  //     {
+  //       value: 'other',
+  //       text: 'Other',
+  //     },
+  //   ],
+  // });
   // await chatCtl.addMessage({
   //   type: 'text',
   //   content: `You have selected ${sel.value}.`,
@@ -122,27 +126,31 @@ async function echo(chatCtl) {
 
   await chatCtl.addMessage({
     type: 'text',
-    content: `What is your favorite fruit?`,
+    content: `What help you need?`,
     self: false,
     avatar: '-',
   });
-  const mulSel = await chatCtl.setActionRequest({
-    type: 'multi-select',
-    options: [
-      {
-        value: 'apple',
-        text: 'Apple',
-      },
-      {
-        value: 'orange',
-        text: 'Orange',
-      },
-      {
-        value: 'none',
-        text: 'None',
-      },
-    ],
+  await chatCtl.setActionRequest({
+    type: 'text',
+    placeholder: 'Enter text here',
   });
+  // const mulSel = await chatCtl.setActionRequest({
+  //   type: 'multi-select',
+  //   options: [
+  //     {
+  //       value: 'apple',
+  //       text: 'Apple',
+  //     },
+  //     {
+  //       value: 'orange',
+  //       text: 'Orange',
+  //     },
+  //     {
+  //       value: 'none',
+  //       text: 'None',
+  //     },
+  //   ],
+  // });
   // await chatCtl.addMessage({
   //   type: 'text',
   //   content: `You have selected '${mulSel.value}'.`,
@@ -152,74 +160,78 @@ async function echo(chatCtl) {
 
   await chatCtl.addMessage({
     type: 'text',
-    content: `What is your favorite picture?`,
+    content: `Okay`,
     self: false,
     avatar: '-',
   });
-  const file = (await chatCtl.setActionRequest({
-    type: 'file',
-    accept: 'image/*',
-    multiple: true,
-  }));
-  await chatCtl.addMessage({
-    type: 'jsx',
-    content: (
-      <div>
-        {file.files.map((f) => (
-          <img
-            key={file.files.indexOf(f)}
-            src={window.URL.createObjectURL(f)}
-            alt="File"
-            style={{ width: '100%', height: 'auto' }}
-          />
-        ))}
-      </div>
-    ),
-    self: false,
-    avatar: '-',
-  });
-
-  await chatCtl.addMessage({
+  await chatCtl.setActionRequest({
     type: 'text',
-    content: `Please enter your voice.`,
-    self: false,
-    avatar: '-',
+    placeholder: 'Enter text here',
   });
-  const audio = (await chatCtl
-    .setActionRequest({
-      type: 'audio',
-    })
-    .catch(() => ({
-      type: 'audio',
-      value: 'Voice input failed.',
-      avatar: '-',
-    })));
-  await (audio.audio
-    ? chatCtl.addMessage({
-        type: 'jsx',
-        content: (
-          <a href={window.URL.createObjectURL(audio.audio)}>Audio downlaod</a>
-        ),
-        self: false,
-        avatar: '-',
-      })
-    : chatCtl.addMessage({
-        type: 'text',
-        content: audio.value,
-        self: false,
-        avatar: '-',
-      }));
+  // const file = (await chatCtl.setActionRequest({
+  //   type: 'file',
+  //   accept: 'image/*',
+  //   multiple: true,
+  // }));
+  // await chatCtl.addMessage({
+  //   type: 'jsx',
+  //   content: (
+  //     <div>
+  //       {file.files.map((f) => (
+  //         <img
+  //           key={file.files.indexOf(f)}
+  //           src={window.URL.createObjectURL(f)}
+  //           alt="File"
+  //           style={{ width: '100%', height: 'auto' }}
+  //         />
+  //       ))}
+  //     </div>
+  //   ),
+  //   self: false,
+  //   avatar: '-',
+  // });
 
-  await chatCtl.addMessage({
-    type: 'text',
-    content: `Please press the button.`,
-    self: false,
-    avatar: '-',
-  });
-  const good = await chatCtl.setActionRequest({
-    type: 'custom',
-    Component: GoodInput,
-  });
+  // await chatCtl.addMessage({
+  //   type: 'text',
+  //   content: `Please enter your voice.`,
+  //   self: false,
+  //   avatar: '-',
+  // });
+  // const audio = (await chatCtl
+  //   .setActionRequest({
+  //     type: 'audio',
+  //   })
+  //   .catch(() => ({
+  //     type: 'audio',
+  //     value: 'Voice input failed.',
+  //     avatar: '-',
+  //   })));
+  // await (audio.audio
+  //   ? chatCtl.addMessage({
+  //       type: 'jsx',
+  //       content: (
+  //         <a href={window.URL.createObjectURL(audio.audio)}>Audio downlaod</a>
+  //       ),
+  //       self: false,
+  //       avatar: '-',
+  //     })
+  //   : chatCtl.addMessage({
+  //       type: 'text',
+  //       content: audio.value,
+  //       self: false,
+  //       avatar: '-',
+  //     }));
+
+  // await chatCtl.addMessage({
+  //   type: 'text',
+  //   content: `Please press the button.`,
+  //   self: false,
+  //   avatar: '-',
+  // });
+  // const good = await chatCtl.setActionRequest({
+  //   type: 'custom',
+  //   Component: GoodInput,
+  // });
   // await chatCtl.addMessage({
   //   type: 'text',
   //   content: `You have pressed the ${good.value} button.`,
